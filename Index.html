@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¡Estás invitad@ al cumple de Julia!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #ffe6f0, #ffffff);
+      font-family: 'Open Sans', sans-serif;
+      color: #d63384;
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      padding: 2rem;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      color: #e83e8c;
+    }
+
+    .emoji {
+      font-size: 2.5rem;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 500px;
+      margin: 2rem auto;
+      box-shadow: 0 8px 16px rgba(214, 51, 132, 0.2);
+      animation: slideIn 1.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .countdown {
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      color: #c2185b;
+    }
+
+    form {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input, textarea {
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #d63384;
+      color: white;
+      padding: 0.8rem;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #c2185b;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="emoji">💖🎉💃</div>
+    <h1>¡Estás invitad@ al cumple de Julia!</h1>
+
+    <div class="card">
+      <p>Se viene mi cumple y me encantaría que vengas a festejar conmigo 🥳</p>
+      <p><strong>¿Dónde?</strong> Vamos a cenar en <b>Garage Burger</b> 🍔 y después seguimos con drinks & bailecito 💃</p>
+      <p><strong>Cuándo:</strong> Viernes <b>4 de julio</b> a las <b>21:00 hs</b></p>
+
+      <div class="countdown" id="countdown">Cargando cuenta regresiva...</div>
+
+      <h3>Confirmá tu asistencia 🎫</h3>
+      <form onsubmit="enviarWhatsApp(event)">
+        <input type="text" id="nombre" placeholder="Tu nombre" required />
+        <textarea id="mensaje" placeholder="¿Querés dejarme un mensajito?"></textarea>
+        <button type="submit">Confirmar por WhatsApp</button>
+      </form>
+    </div>
+
+    <footer>
+      🤫 Invitación secreta... no se la muestres a cualquiera, jeje 💅<br>
+      Con amor, Julia 💖
+    </footer>
+  </div>
+
+  <script>
+    const countdown = document.getElementById("countdown");
+    const targetDate = new Date("2025-07-04T21:00:00").getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        clearInterval(interval);
+        countdown.innerHTML = "¡Es hoy! 🎉";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdown.innerHTML = `Faltan ${days}d ${hours}h ${minutes}m ${seconds}s 🎈`;
+    }, 1000);
+
+    function enviarWhatsApp(e) {
+      e.preventDefault();
+      const nombre = document.getElementById("nombre").value;
+      const mensaje = document.getElementById("mensaje").value;
+
+      const texto = `¡Hola Julia! 😄 Confirmo mi asistencia al cumple 🎉
+
+Soy: *${nombre}*
+Mensaje: ${mensaje}`;
+      const url = `https://wa.me/59812345678?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+
+</body>
+</html>
